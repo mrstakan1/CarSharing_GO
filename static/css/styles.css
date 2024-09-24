@@ -1,0 +1,17 @@
+/* static/css/styles.css */
+
+/* Добавляем верхний отступ, чтобы контент не перекрывался фиксированной навигацией */
+body {
+    padding-top: 70px;
+}
+
+/* Подвал */
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
+    text-align: center;
+}

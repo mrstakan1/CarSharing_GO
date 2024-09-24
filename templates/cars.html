@@ -1,0 +1,24 @@
+<!-- templates/cars.html -->
+
+{{define "content"}}
+<div class="container mt-5">
+    <h2>Доступные автомобили</h2>
+    <div class="row">
+        {{range .Cars}}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="/static/images/car_placeholder.jpg" class="card-img-top" alt="Автомобиль">
+                <div class="card-body">
+                    <h5 class="card-title">{{.Make}} {{.Model}}</h5>
+                    <p class="card-text">
+                        Год: {{.Year}}<br>
+                        Местоположение: {{.Location}}
+                    </p>
+                    <a href="/cars/{{.ID}}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}

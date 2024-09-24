@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="/">Главная</a>
+    <a href="/cars">Автомобили</a>
+
+    {{if .IsAuthenticated}}
+    <!-- Если пользователь авторизован -->
+    <a href="/profile">Профиль</a>
+    <a href="/logout">Выйти</a>
+    {{else}}
+    <!-- Если пользователь не авторизован -->
+    <a href="/login">Войти</a>
+    <a href="/register">Регистрация</a>
+    {{end}}
+</nav>
+
+<div class="container">
+    <h1>Добро пожаловать на наш Каршеринг-Сервис!</h1>
+    <p>Вы можете просмотреть доступные автомобили, забронировать их и многое другое.</p>
+</div>
+</body>
+</html>

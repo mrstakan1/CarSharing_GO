@@ -1,0 +1,24 @@
+<!-- templates/admin/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<div class="container">
+    <h2>Админская Панель</h2>
+    <nav>
+        <ul>
+            <li><a href="/admin/users">Управление Пользователями</a></li>
+            <li><a href="/admin/cars">Управление Автомобилями</a></li>
+            <li><a href="/dashboard">Пользовательский Дашборд</a></li>
+            <li><a href="/logout">Выйти</a></li>
+        </ul>
+    </nav>
+</div>
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- templates/admin/create_car.html -->
+
+{{define "content"}}
+<div class="container mt-5">
+    <h2>Добавить автомобиль</h2>
+    <form action="/admin/cars" method="POST">
+        <div class="mb-3">
+            <label for="make" class="form-label">Марка:</label>
+            <input type="text" class="form-control" name="make" required>
+        </div>
+        <div class="mb-3">
+            <label for="model" class="form-label">Модель:</label>
+            <input type="text" class="form-control" name="model" required>
+        </div>
+        <div class="mb-3">
+            <label for="year" class="form-label">Год:</label>
+            <input type="number" class="form-control" name="year" required>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Местоположение:</label>
+            <input type="text" class="form-control" name="location" required>
+        </div>
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+</div>
+{{end}}
