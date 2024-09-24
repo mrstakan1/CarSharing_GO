@@ -15,7 +15,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtKey = []byte(os.Getenv("JWT_SECRET"))
+var JwtKey = []byte(os.Getenv("JWT_SECRET"))
 
 type Credentials struct {
 	Email    string `json:"email"`
@@ -84,7 +84,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString(JwtKey)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}

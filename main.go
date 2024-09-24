@@ -23,9 +23,9 @@ func main() {
 
 	router.Use(middleware.AuthMiddleware)
 
-	routes.RegisterPublicRoutes(router)
-	routes.RegisterUserRoutes(router)
-	routes.RegisterAdminRoutes(router)
+	routes.RegisterPublicRoutes(router) // home, login, register, logout
+	routes.RegisterUserRoutes(router)   // profile, booking
+	routes.RegisterAdminRoutes(router)  // add/edit/delete car, admin-panel
 
 	port := os.Getenv("PORT")
 	if port == "" {

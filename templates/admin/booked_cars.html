@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Забронированные автомобили</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="/admin/dashboard">Админ-панель</a>
+    <a href="/logout">Выйти</a>
+</nav>
+
+<div class="container">
+    <h2>Забронированные автомобили</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Автомобиль</th>
+            <th>Пользователь</th>
+            <th>Начало бронирования</th>
+            <th>Окончание бронирования</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range .Bookings}}
+        <tr>
+            <td>{{.Car.Make}} {{.Car.Model}} ({{.Car.Year}})</td>
+            <td>{{.User.Name}} ({{.User.Email}})</td>
+            <td>{{.StartTime.Format "02.01.2006 15:04"}}</td>
+            <td>{{.EndTime.Format "02.01.2006 15:04"}}</td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

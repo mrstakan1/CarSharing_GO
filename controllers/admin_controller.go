@@ -144,7 +144,6 @@ func AddCar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Обработка POST-запроса для добавления автомобиля
 	name := r.FormValue("make")
 	model := r.FormValue("model")
 	yearStr := r.FormValue("year")
@@ -223,7 +222,6 @@ func EditCar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Обработка POST-запроса для редактирования автомобиля
 	name := r.FormValue("make")
 	model := r.FormValue("model")
 	yearStr := r.FormValue("year")
@@ -284,4 +282,32 @@ func DeleteCar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/admin/cars", http.StatusSeeOther)
+}
+
+type AdminBookingsPageData struct {
+	Title    string
+	Bookings []models.Booking
+}
+
+func ShowBookedCars(w http.ResponseWriter, r *http.Request) {
+	var bookings []models.Booking
+	database.DB.Preload("Car").Preload("User").Find(&bookings)
+
+	data := AdminBookingsPageData{
+		Title:    "Забронированные автомобили",
+		Bookings: bookings,
+	}
+
+	tmpl, err := template.ParseFiles("templates/admin/booked_cars.html")
+	if err != nil {
+		log.Println("Ошибка парсинга шаблона:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println("Ошибка выполнения шаблона:", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 }

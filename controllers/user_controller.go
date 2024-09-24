@@ -3,18 +3,17 @@ package controllers
 import (
 	"CarSharing/database"
 	"CarSharing/models"
-
-	"github.com/dgrijalva/jwt-go"
-
 	"errors"
+	"github.com/dgrijalva/jwt-go"
 	"html/template"
 	"log"
 	"net/http"
 )
 
 type ProfilePageData struct {
-	Title string
-	User  models.User
+	Title    string
+	User     models.User
+	Bookings []models.Booking
 }
 
 func ProfilePage(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +24,6 @@ func ProfilePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Получаем идентификатор пользователя из контекста или куки
 	cookie, err := r.Cookie("token")
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -38,13 +36,16 @@ func ProfilePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Получаем данные пользователя из базы данных
 	var user models.User
 	database.DB.First(&user, claims.UserID)
 
+	var bookings []models.Booking
+	database.DB.Preload("Car").Where("user_id = ?", claims.UserID).Find(&bookings)
+
 	data := ProfilePageData{
-		Title: "Профиль пользователя",
-		User:  user,
+		Title:    "Профиль пользователя",
+		User:     user,
+		Bookings: bookings,
 	}
 
 	err = tmpl.Execute(w, data)
@@ -58,7 +59,7 @@ func ParseToken(tokenStr string) (*Claims, error) {
 	claims := &Claims{}
 
 	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
+		return JwtKey, nil
 	})
 
 	if err != nil || !token.Valid {

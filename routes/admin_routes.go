@@ -10,9 +10,8 @@ import (
 )
 
 func RegisterAdminRoutes(router *mux.Router) {
-	// Создаём под-роутер для админских маршрутов
 	adminRouter := router.PathPrefix("/admin").Subrouter()
-	adminRouter.Use(middleware.AdminMiddleware) // Применяем middleware
+	adminRouter.Use(middleware.AdminMiddleware)
 
 	// Админская панель
 	adminRouter.HandleFunc("/dashboard", controllers.AdminDashboard).Methods("GET")
@@ -26,4 +25,5 @@ func RegisterAdminRoutes(router *mux.Router) {
 	adminRouter.HandleFunc("/cars/add", controllers.AddCar).Methods("GET", "POST")
 	adminRouter.HandleFunc("/cars/{id}/edit", controllers.EditCar).Methods("GET", "POST")
 	adminRouter.HandleFunc("/cars/{id}/delete", controllers.DeleteCar).Methods("POST")
+	adminRouter.HandleFunc("/booked_cars", controllers.ShowBookedCars).Methods("GET")
 }

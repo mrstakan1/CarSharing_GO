@@ -1,33 +1,49 @@
-<!-- templates/booking.html -->
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Title}}</title>
-    <link rel="stylesheet" href="/static/css/booking.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+<nav class="navbar">
+    <a href="/">Главная</a>
+    <a href="/profile">Профиль</a>
+    <a href="/logout">Выйти</a>
+</nav>
+
 <div class="container">
-    <h2>Создать Бронирование</h2>
-    <form action="/booking/create" method="POST">
-        <label for="car_id">Выберите Автомобиль:</label>
-        <select id="car_id" name="car_id" required>
+    <h2>Бронирование автомобиля</h2>
+
+    {{if .Message}}
+    <div class="alert">
+        {{.Message}}
+    </div>
+    {{else}}
+    <form action="/bookings" method="POST">
+        <label for="car">Выберите автомобиль:</label>
+        <select id="car" name="car_id">
             {{range .Cars}}
-            <option value="{{.ID}}">{{.Make}} {{.Model}} ({{.Year}}) - {{.Location}}</option>
+            <option value="{{.ID}}">{{.Make}} {{.Model}} ({{.Year}})</option>
             {{end}}
         </select>
 
-        <label for="start_time">Время Начала:</label>
-        <input type="datetime-local" id="start_time" name="start_time" required>
+        <label for="hours">Количество часов:</label>
+        <select id="hours" name="hours">
+            <option value="1">1 час</option>
+            <option value="2">2 часа</option>
+            <option value="3">3 часа</option>
+            <option value="4">4 часа</option>
+            <option value="5">5 часов</option>
+            <option value="6">6 часов</option>
+            <option value="7">7 часов</option>
+            <option value="8">8 часов</option>
+        </select>
 
-        <label for="end_time">Время Окончания:</label>
-        <input type="datetime-local" id="end_time" name="end_time" required>
-
-        <button type="submit">Создать Бронирование</button>
+        <button type="submit">Забронировать</button>
     </form>
-    <a href="/dashboard" class="btn">Назад</a>
+    {{end}}
 </div>
-<script src="/static/js/booking.js"></script>
 </body>
 </html>

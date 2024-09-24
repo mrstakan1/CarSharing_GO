@@ -1,3 +1,39 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>{{.Title}}</title>-->
+<!--    <link rel="stylesheet" href="/static/css/styles.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar">-->
+<!--    <a href="/">Главная</a>-->
+<!--    <a href="/cars">Автомобили</a>-->
+
+<!--    &lt;!&ndash; Профиль и выход, так как пользователь авторизован &ndash;&gt;-->
+<!--    <a href="/profile">Профиль</a>-->
+<!--    <a href="/logout">Выйти</a>-->
+<!--</nav>-->
+
+<!--<div class="container">-->
+<!--    <h2>Профиль пользователя</h2>-->
+
+<!--    <div class="profile-info">-->
+<!--        <p><strong>Имя:</strong> {{.User.Name}}</p>-->
+<!--        <p><strong>Email:</strong> {{.User.Email}}</p>-->
+<!--        <p><strong>Дата регистрации:</strong> {{.User.CreatedAt.Format "02-01-2006"}}</p>-->
+<!--        <p><strong>Статус:</strong> {{if .User.IsAdmin}}Администратор{{else}}Пользователь{{end}}</p>-->
+<!--    </div>-->
+
+<!--    <div class="profile-actions">-->
+<!--        <a href="/profile/edit" class="btn">Редактировать профиль</a>-->
+<!--        <a href="/logout" class="btn btn-logout">Выйти</a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -9,9 +45,6 @@
 <body>
 <nav class="navbar">
     <a href="/">Главная</a>
-    <a href="/cars">Автомобили</a>
-
-    <!-- Профиль и выход, так как пользователь авторизован -->
     <a href="/profile">Профиль</a>
     <a href="/logout">Выйти</a>
 </nav>
@@ -22,14 +55,35 @@
     <div class="profile-info">
         <p><strong>Имя:</strong> {{.User.Name}}</p>
         <p><strong>Email:</strong> {{.User.Email}}</p>
-        <p><strong>Дата регистрации:</strong> {{.User.CreatedAt.Format "02-01-2006"}}</p>
         <p><strong>Статус:</strong> {{if .User.IsAdmin}}Администратор{{else}}Пользователь{{end}}</p>
     </div>
 
-    <div class="profile-actions">
-        <a href="/profile/edit" class="btn">Редактировать профиль</a>
-        <a href="/logout" class="btn btn-logout">Выйти</a>
+    <h3>Ваши бронирования</h3>
+    <div class="bookings">
+        {{if .Bookings}}
+        <table>
+            <thead>
+            <tr>
+                <th>Автомобиль</th>
+                <th>Начало бронирования</th>
+                <th>Окончание бронирования</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .Bookings}}
+            <tr>
+                <td>{{.Car.Make}} {{.Car.Model}} ({{.Car.Year}})</td>
+                <td>{{.StartTime.Format "02.01.2006 15:04"}}</td>
+                <td>{{.EndTime.Format "02.01.2006 15:04"}}</td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+        {{else}}
+        <p>У вас нет активных бронирований.</p>
+        {{end}}
     </div>
 </div>
 </body>
 </html>
+
